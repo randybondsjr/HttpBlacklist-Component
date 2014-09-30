@@ -4,17 +4,18 @@
  * 
  * Based on http://wordpress.org/extend/plugins/httpbl/
  * 
- * @author Thomas Heymann
- * @version	0.1
+ * @author Randy Bonds Jr, Thomas Heymann (source)
+ * @version	0.2
  * @license	http://www.opensource.org/licenses/mit-license.php The MIT License
  * @package app
  * @subpackage app.views.helpers
  **/
-class HttpBlacklistComponent extends Object {
+App::uses('Component', 'Controller');
+class HttpBlacklistComponent extends Component {
 	
 	var $components = array(
-		'RequestHandler',
-		'Session'
+		'Session',
+		'Request'
 		);
 	
 	var $response = array();
@@ -41,9 +42,11 @@ class HttpBlacklistComponent extends Object {
 		);
 	
 	// Called before the Controller::beforeFilter().
-	function initialize(&$controller, $options) {
-        $this->controller =& $controller;
+
+	function initialize(Controller $controller) {
+    $this->controller = $controller;
 	}
+
 	
 	function blockMalicious($ip = null) {
 		if ( $this->isMalicious($ip) )
@@ -54,10 +57,10 @@ class HttpBlacklistComponent extends Object {
 			$this->controller->redirect($honeyPot, 301);
 		exit;
 	}
-	function isMalicious($ip = null) {
-		if ( empty($ip) )
-			$ip = $this->RequestHandler->getClientIP();
-		
+	function isMalicious($ip = null) { 
+		if ( empty($ip) ) {
+		  $ip = $this->controller->request->clientIp();
+		}
 		// Cache result to minimize requests
 		$integerIp = sprintf('%u', ip2long($ip));
 		if ( $this->Session->check("HttpBlacklist.$integerIp") && $this->Session->read("HttpBlacklist.$integerIp.expires") < time() )

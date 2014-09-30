@@ -2,8 +2,8 @@
 /**
  * Http Blacklist Helper Class
  * 
- * @author Thomas Heymann
- * @version	0.1
+ * @author Randy Bonds Jr, Thomas Heymann (source)
+ * @version	0.2
  * @license	http://www.opensource.org/licenses/mit-license.php The MIT License
  * @package app
  * @subpackage app.views.helpers

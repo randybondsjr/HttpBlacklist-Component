@@ -1,7 +1,14 @@
-Enter your http:BL api key here:
+#CakePHP Component for blocking malicious IP addresses
+Updated by Randy Bonds Jr to CakePHP 2.x
+
+##Instructions
+Enter your [http:BL api key](http://www.projecthoneypot.org/httpbl_configure.php) here:  
 app/config/bootstrap.php
 
-Place your honeypot php file here:
+Place your honeypot php file here:  
 app/webroot/
 
-Use $this->blockMalicious() in your controller (best in AppController::beforeFilter)
+Use ``$this->blockMalicious()`` in your controller (best in AppController::beforeFilter)
+
+Use 
+`` <?php echo $this->HttpBlacklist->honeyPot(); ?>``
